@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title%></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container" style="height: 100vh;">
+        <button class="button is-primary" style="margin-bottom: 1rem;">
+            <a href="/" style="color: white;">Back</a>
+        </button>
+
+        <div class="columns">
+            <div class="column is-one-third">
+                <figure class="image is-4by3">
+                    <img src="<%= orchid.image %>" alt="<%= orchid.name %>">
+                </figure>
+            </div>
+            <div class="column">
+                <h1 class="title is-1"><%= orchid.name %></h1>
+                <p><strong>Origin:</strong> <%= orchid.origin %></p>
+                <p><strong>Category:</strong> <%= orchid.category?.categoryName %></p>
+                <p><strong>Natural:</strong> <%= orchid.isNatural %></p>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>

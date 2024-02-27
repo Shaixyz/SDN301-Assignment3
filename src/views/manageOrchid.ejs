@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title%></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container" style="height: 100vh;">
+        <div class="columns">
+            <div class="column is-two-thirds">
+
+                <div class="modal" id="modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Add New Orchid</p>
+                            <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <div class="column">
+                                <form method="POST">
+                                    <div class="field">
+                                        <label class="label">Name</label>
+                                        <div class="control">
+                                            <input class="input" name="name" type="text" placeholder="Input name"
+                                                required onblur="trimInput()">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Image</label>
+                                        <div class="control">
+                                            <input class="input" name="image" type="text"
+                                                placeholder="Input image" required onblur="trimInput()">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Origin</label>
+                                        <div class="control">
+                                            <input class="input" name="origin" type="text"
+                                                placeholder="Input origin" required onblur="trimInput()">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Category</label>
+                                        <div class="control">
+                                            <select name="category" class="input" required>
+                                                <% categories.forEach(function(category){ %>
+                                                    <option value="<%= category._id%>"><%= category.categoryName%></option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="field">
+                                        <label class="checkbox">
+                                            <span style="font-weight: bold;">Natural</span>
+                                            <span class="control">
+                                                <input type="checkbox" name="isNatural" id="isNatural">
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <button class="button is-link" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <button class="button is-primary modal-button js-modal-trigger" data-target="modal"
+                    aria-haspopup="true">Add New Orchid</button>
+
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th><abbr style="text-decoration: none;" title="name">Name</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="image">Image</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="origin">Origin</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="category">Category</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="natural">Natural</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="Action">Action</abbr></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% orchids.forEach(function(orchid, index){ %>
+
+                            <tr>
+                                <td>
+                                    <%= orchid.name %>
+                                </td>
+                                <td>
+                                    <img src="<%= orchid.image %>" alt="<%= orchid.name %>" width="100px"
+                                        height="100px"/>
+                                </td>
+                                <td>
+                                    <%= orchid.origin %>
+                                </td>
+                                <td>
+                                    <%= orchid.category?.categoryName %>
+                                </td>
+                                <td>
+                                    <%= orchid.isNatural? "Yes" : "No" %>
+                                </td>
+                                <td>
+                                    <button class="button is-primary" onclick="showHide('<%= index%>')" id="activeActionButton<%= index%>">Show Action</button>
+                                    <div id="actionButton<%= index%>" style="display: none;">
+                                        <a href="<%= baseURL%>/delete/<%= orchid._id%>"><button
+                                            class="button is-danger" onclick="return confirm('Confirm to delete?')">Delete</button></a>
+                                        <a href="<%= baseURL%>/edit/<%= orchid._id%>"><button
+                                                class="button is-warning">Edit</button></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>

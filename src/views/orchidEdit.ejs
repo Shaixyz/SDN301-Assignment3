@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <%- include('partials/header') %>
+        <div class="column">
+            <a href="/orchids" class="button is-primary">Back</a>
+            <form method="POST">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input class="input" name="name" type="text" placeholder="Input name" required value="<%= orchid.name %>"
+                            onblur="trimInput()">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Image</label>
+                    <div class="control">
+                        <input class="input" name="image" type="text" placeholder="Input image" required value="<%= orchid.image %>"
+                            onblur="trimInput()">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Origin</label>
+                    <div class="control">
+                        <input class="input" name="origin" type="text" placeholder="Input origin" required value="<%= orchid.origin %>"
+                            onblur="trimInput()">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Category</label>
+                    <div class="control">
+                        <select name="category" class="input" required>
+                            <% categories.forEach(function(category){ %>
+                                <option value="<%= category._id%>" <% if(category.categoryName == orchid.category?.categoryName) { %> selected <% } %> >
+                                    <%= category.categoryName%>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="checkbox">
+                        <span style="font-weight: bold;">Natural</span>
+                        <span class="control">
+                            <input type="checkbox" name="isNatural" <% if(orchid.isNatural) { %> checked <% } %>>
+                        </span>
+                    </label>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <%- include('partials/footer') %>
+</body>
+
+</html>

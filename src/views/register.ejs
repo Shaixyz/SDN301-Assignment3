@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Registration</title>
+</head>
+<%- include('partials/header') %>
+
+    <body>
+        <section class="hero is-primary is-fullheight" style="background-color: rgba(59,130,246,.5);">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="columns is-centered">
+                        <div class="column is-5-tablet is-4-desktop is-3-widescreen box"
+                            style="width: 25rem; height: auto;">
+                            <div>
+                                <% if(success_msg !='' ){ %>
+                                    <div class="notification is-success">
+                                        <%= success_msg %>
+
+                                    </div>
+                                    <% } %>
+                                        <% if(error_msg !='' ){ %>
+                                            <div class="notification is-warning">
+                                                <%= error_msg %>
+
+                                            </div>
+                                            <% } %>
+
+                                                <% if(error !='' ){ %>
+                                                    <div class="notification is-warning">
+                                                        <%= error %>
+
+                                                    </div>
+                                                    <% } %>
+                            </div>
+                            <div
+                                style="display: flex;justify-content: center;align-items: center;flex-direction: column;text-align:center;">
+                                <div class="field">
+                                    <img src="https://icons.iconarchive.com/icons/ionic/ionicons/128/logo-snapchat-icon.png"
+                                        alt="logo" style="width: 10rem; height: 10rem;" />
+                                </div>
+                                <div class="field">
+                                    <h1 style="font-weight: bold; font-size:  x-large; margin-bottom: 2rem;">Welcome
+                                        to Orchid!</h1>
+                                </div>
+                            </div>
+                            <form method="POST">
+                                <div class="field">
+                                    <label for="" class="label">Username</label>
+                                    <div class="control has-icons-left">
+                                        <input type="email" name="username" placeholder="Input your email" class="input"
+                                            required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label">Name</label>
+                                    <div class="control has-icons-left">
+                                        <input type="text" name="name" placeholder="Input your name" class="input"
+                                            required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label">Year of Birth</label>
+                                    <div class="control has-icons-left">
+                                        <input type="number" name="YOB" placeholder="Input your year of birth" class="input"
+                                            required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label">Password</label>
+                                    <div class="control has-icons-left">
+                                        <input id="password" name="password" type="password"
+                                            placeholder="Input your password" class="input" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label">Confirm Password</label>
+                                    <div class="control has-icons-left">
+                                        <input id="confirmPassword" type="password" placeholder="Input your password"
+                                            class="input" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="control" style="text-align: center;">
+                                    <button class="button is-link" type="submit"
+                                        style="width: 10rem;height: 3rem;border-radius: 10rem;">
+                                        Register
+                                    </button>
+                                </div>
+                            </form>
+                            <div class="field">
+                                <div style="text-align: center; margin-top: 2rem;">
+                                    <p>Already have an account? <a href="/login" style="font-weight: bold">Login</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+
+    <%- include('partials/footer') %>
+
+</html>

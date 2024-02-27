@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <style>
+    #successMessage {
+      position: fixed;
+      text-align: center;
+      top: 80px; 
+      left: 10px; 
+      z-index: 1000; 
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <% if(success_msg != ''){ %>
+    <div id="successMessage" class="notification is-success" style="width: 200px; padding: 10px">
+      <%= success_msg %>
+    </div>
+  <% } %>
+
+  <% if(error_msg !='' ){ %>
+    <div id="successMessage" class="notification is-warning" style="width: 200px; padding: 10px">
+        <%= error_msg %>
+
+    </div>
+    <% } %>
+
+  <div class="container" style="padding: 3rem; min-height: 100vh;"> 
+    <div class="columns is-multiline">
+      <% orchids.forEach(function(orchid, index){ %>
+      <div class="column is-one-third">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="<%= orchid.image %>" alt="<%= orchid.name %>">
+            </figure>
+          </div>
+          <div class="card-content"
+            style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">
+                  <%= orchid.name %>
+                </p>
+              </div>
+            </div>
+
+            <div class="buttons">
+              <a class="button is-primary" href="/orchids/<%=orchid._id%>">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+
+<script>
+  setTimeout(function() {
+    var successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+      successMessage.style.display = 'none';
+    }
+  }, 3000); 
+</script>
+
+</html>

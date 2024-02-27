@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title%></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container" style="height: 100vh;">
+        <div class="columns">
+            <div class="column is-two-thirds">
+                <a href="/" class="button is-primary">Back</a>
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="margin-top: 1rem;">
+                    <thead>
+                        <tr>
+                            <th><abbr style="text-decoration: none;" title="username">Username</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="name">Name</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="YOB">YOB</abbr></th>
+                            <th><abbr style="text-decoration: none;" title="isAdmin">Admin</abbr></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(function(account, index){ %>
+
+                            <tr>
+                                <td>
+                                    <%= account.username %>
+                                </td>
+                                <td>
+                                    <%= account.name %>
+                                </td>
+                                <td>
+                                    <%= account.YOB %>
+                                </td>
+                                <td>
+                                    <%= account.isAdmin? "Yes" : "No" %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>
