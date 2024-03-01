@@ -35,38 +35,44 @@ class userController {
 
     createNewAccount(req, res, next) {
         const { username, password, name, YOB } = req.body;
-        let errors = [];
-
+        let errorMessages = [];
+    
         if (!username || !password || !name || !YOB) {
-            errors.push({ msg: 'Please enter all fields' });
+            errorMessages.push('Please enter all fields');
         }
-
+    
         if (password.length < 6) {
-            errors.push({ msg: 'Password must be at least 6 characters' });
+            errorMessages.push('Password must be at least 6 characters');
         }
-
-        if (errors.length > 0) {
-            res.render('register', { errors });
-        } else {
-            Accounts.findOne({ username: username }).then(account => {
-                if (account) {
-                    errors.push({ msg: 'Username already exists' });
-                    res.render('register', { errors });
-                } else {
-                    const newAccount = new Accounts({ username, password, name, YOB });
-                    bcrypt.hash(newAccount.password, 10, (err, hash) => {
-                        if (err) throw err;
-                        newAccount.password = hash;
-                        newAccount.save().then(() => {
-                            req.flash('success_msg', 'Register success');
-                            res.redirect('/login');
-                        }).catch(err => console.log(err));
-                    });
-                }
-            })
-        }
+    
+        Accounts.findOne({ username: username }).then(account => {
+            if (account) {
+                errorMessages.push('Username already exists');
+            }
+    
+            if (errorMessages.length > 0) {
+                req.flash('error_msg', errorMessages);
+                return res.redirect('/register');
+            } else {
+                const newAccount = new Accounts({ username, password, name, YOB });
+                bcrypt.hash(newAccount.password, 10, (err, hash) => {
+                    if (err) throw err;
+                    newAccount.password = hash;
+                    newAccount.save().then(() => {
+                        req.flash('success_msg', 'Register success');
+                        res.redirect('/login');
+                    }).catch(err => console.log(err));
+                });
+            }
+        }).catch(err => {
+            // Xử lý lỗi
+            console.error(err);
+            req.flash('error_msg', 'An error occurred');
+            res.redirect('/register');
+        });
     }
-
+    
+    
     logout(req, res, next) {
         req.session.passport.user = null;
         req.session.loggedIn = false;

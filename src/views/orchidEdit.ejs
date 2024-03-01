@@ -26,7 +26,8 @@
                     <label class="label">Image</label>
                     <div class="control">
                         <input class="input" name="image" type="text" placeholder="Input image" required value="<%= orchid.image %>"
-                            onblur="trimInput()">
+                            onblur="trimInput()"  
+                            pattern="^(http|https):\/\/.*(jpeg|jpg|png|gif|bmp)$">
                     </div>
                 </div>
 

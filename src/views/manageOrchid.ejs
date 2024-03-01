@@ -4,10 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title%></title>
+    <style>
+        #successMessage {
+          position: fixed;
+          text-align: center;
+          top: 80px; 
+          left: 10px; 
+          z-index: 1000; 
+        }
+      </style>
 </head>
 <body>
     <%- include('partials/header') %>
-    <div class="container" style="height: 100vh;">
+    <% if(success_msg != ''){ %>
+        <div id="successMessage" class="notification is-success" style="width: 200px; padding: 10px">
+          <%= success_msg %>
+        </div>
+      <% } %>
+
+      <% if(error_msg !='' ){ %>
+        <div id="successMessage" class="notification is-warning" style="width: 200px; padding: 10px">
+            <%= error_msg %>
+    
+        </div>
+        <% } %>
+    <div class="container" style="padding: 1rem; min-height: 100vh;">
         <div class="columns">
             <div class="column is-two-thirds">
 
@@ -28,20 +49,20 @@
                                                 required onblur="trimInput()">
                                         </div>
                                     </div>
-
                                     <div class="field">
                                         <label class="label">Image</label>
                                         <div class="control">
                                             <input class="input" name="image" type="text"
-                                                placeholder="Input image" required onblur="trimInput()">
+                                                placeholder="Input image" required
+                                                pattern="^(http|https):\/\/.*(jpeg|jpg|png|gif|bmp)$">
                                         </div>
                                     </div>
-
                                     <div class="field">
                                         <label class="label">Origin</label>
                                         <div class="control">
                                             <input class="input" name="origin" type="text"
-                                                placeholder="Input origin" required onblur="trimInput()">
+                                                placeholder="Input origin" required onblur="trimInput()"
+                                                onkeypress="return event.charCode < 48 || event.charCode > 57">
                                         </div>
                                     </div>
 
@@ -78,7 +99,7 @@
                 <button class="button is-primary modal-button js-modal-trigger" data-target="modal"
                     aria-haspopup="true">Add New Orchid</button>
 
-                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="width: 120%;">
                     <thead>
                         <tr>
                             <th><abbr style="text-decoration: none;" title="name">Name</abbr></th>
@@ -96,9 +117,8 @@
                                 <td>
                                     <%= orchid.name %>
                                 </td>
-                                <td>
-                                    <img src="<%= orchid.image %>" alt="<%= orchid.name %>" width="100px"
-                                        height="100px"/>
+                                <td style="width: 200px; height: 150px;">
+                                    <img src="<%= orchid.image %>" alt="<%= orchid.name %>" style="width: 100%; height: 100%;" />
                                 </td>
                                 <td>
                                     <%= orchid.origin %>
@@ -112,10 +132,12 @@
                                 <td>
                                     <button class="button is-primary" onclick="showHide('<%= index%>')" id="activeActionButton<%= index%>">Show Action</button>
                                     <div id="actionButton<%= index%>" style="display: none;">
-                                        <a href="<%= baseURL%>/delete/<%= orchid._id%>"><button
-                                            class="button is-danger" onclick="return confirm('Confirm to delete?')">Delete</button></a>
-                                        <a href="<%= baseURL%>/edit/<%= orchid._id%>"><button
-                                                class="button is-warning">Edit</button></a>
+                                        <a href="<%= baseURL%>/delete/<%= orchid._id%>"><button class="button is-danger" onclick="return confirm('Confirm to delete?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button></a>
+                                        <a href="<%= baseURL%>/edit/<%= orchid._id%>"><button class="button is-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button></a>
                                     </div>
                                 </td>
                             </tr>
@@ -127,4 +149,12 @@
     </div>
     <%- include('partials/footer') %>
 </body>
+<script>
+    setTimeout(function() {
+      var successMessage = document.getElementById('successMessage');
+      if (successMessage) {
+        successMessage.style.display = 'none';
+      }
+    }, 3000); 
+  </script>
 </html>

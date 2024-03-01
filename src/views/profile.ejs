@@ -7,6 +7,15 @@
     <title>
         <%= title%>
     </title>
+    <style>
+        #successMessage {
+            position: fixed;
+            text-align: center;
+            top: 80px;
+            left: 10px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <%- include('partials/header') %>
 
@@ -54,135 +63,173 @@
                     <br />
 
                     <div class="card">
-                        <% if(success_msg != ''){ %>
-                            <div class="notification is-success" >
-                              <%= success_msg %>
-                             
+                        <% if(success_msg !='' ){ %>
+                            <div id="successMessage" class="notification is-success">
+                                <%= success_msg %>
+
                             </div>
-                        <% } %>
-                        <% if(error_msg != ''){ %>
-                          <div class="notification is-warning">
-                            <%= error_msg %>
-                          
-                          </div>
-                        <% } %>
-                        
-                        <% if(error != ''){ %>
-                          <div class="notification is-warning">
-                            <%= error %>
-                          
-                          </div>
-                        <% } %>
-                        <div class="card-header">
-                            <p class="card-header-title">Edit Profile</p>
-                        </div>
-                        <div class="card-content">
-                            <div class="content">
-                                <form action="/profile" method="POST">
-                                    <div class="field">
-                                        <label class="label">Name</label>
-                                        <div class="control">
-                                            <input class="input" type="text" placeholder="input name" name="name" value="<%= user.name%>" required/>
-                                        </div>
-                                    </div>
+                            <% } %>
+                                <% if(error_msg !='' ){ %>
+                                    <div class="notification is-warning">
+                                        <%= error_msg %>
 
-                                    <div class="field">
-                                        <label class="label">Username</label>
-                                        <div class="control has-icons-left has-icons-right">
-                                            <input class="input" type="email" placeholder="Input username"
-                                                name="username" value="<%= user.username%>" required/>
-                                            <span class="icon is-small is-left">
-                                                <i class="fas fa-user"></i>
-                                            </span>
-                                            <span class="icon is-small is-right">
-                                                <i class="fas fa-check"></i>
-                                            </span>
-                                        </div>
                                     </div>
+                                    <% } %>
 
-                                    <div class="field">
-                                        <label class="label">Year of Birth</label>
-                                        <div class="control">
-                                            <input class="input" type="number" placeholder="Input year of birth" name="YOB" value="<%= user.YOB%>" required />
-                                        </div>
-                                    </div>
+                                        <% if(error !='' ){ %>
+                                            <div id="successMessage" class="notification is-warning">
+                                                <%= error %>
 
-                                    <div class="field">
-                                        <div class="control">
-                                            <button class="button is-link" type="submit">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                                            </div>
+                                            <% } %>
+                                                <div class="card-header">
+                                                    <p class="card-header-title">Edit Profile</p>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div class="content">
+                                                        <form action="/profile" method="POST" oninput="checkChanges()">
+                                                            <div class="field">
+                                                                <label class="label">Name</label>
+                                                                <div class="control">
+                                                                    <input class="input" type="text"
+                                                                        placeholder="input name" id="name" name="name"
+                                                                        value="<%= user.name%>" required />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="field">
+                                                                <label class="label">Username</label>
+                                                                <div class="control has-icons-left has-icons-right">
+                                                                    <input class="input" type="email"
+                                                                        placeholder="Input username" id="username"
+                                                                        name="username" value="<%= user.username%>"
+                                                                        required />
+                                                                    <span class="icon is-small is-left">
+                                                                        <i class="fas fa-user"></i>
+                                                                    </span>
+                                                                    <span class="icon is-small is-right">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="field">
+                                                                <label class="label">Year of Birth</label>
+                                                                <div class="control">
+                                                                    <input class="input" type="number"
+                                                                        placeholder="Input year of birth" id="YOB"
+                                                                        name="YOB" value="<%= user.YOB%>" required
+                                                                        min="1900" max="2020">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="field">
+                                                                <div class="control">
+                                                                    <button id="submitButton" class="button is-link"
+                                                                        type="submit" disabled>Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                     </div>
                     <br />
 
-                    
-                    <% if(successPassword_msg != ''){ %>
-                        <div class="notification is-success" >
-                          <%= successPassword_msg %>
-                         
-                        </div>
-                    <% } %>
-                    <% if(errorPassword_msg != ''){ %>
-                      <div class="notification is-warning">
-                        <%= errorPassword_msg %>
-                      
-                      </div>
-                    <% } %>
-                    
-                    <% if(errorPassword.length > 0){ %>
-                        <% errorPassword.forEach( (error) => { %>
-                          <div class="notification is-warning">
-                            <%= error.msg %>
-                          </div>
-                        <% }) %>
-                    <% } %>
-                    <div class="card">
-                        <div class="card-header">
-                            <p class="card-header-title">Change Password</p>
-                        </div>
-                        <div class="card-content">
-                            <div class="content">
-                                <form action="/profile/change-password" method="POST">
-                                    <div class="field">
-                                        <label class="label">Old Password</label>
-                                        <div class="control">
-                                            <input class="input" type="password" placeholder="Input old password"
-                                                name="oldPassword" />
-                                        </div>
-                                    </div>
 
-                                    <div class="field">
-                                        <label class="label">New Password</label>
-                                        <div class="control">
-                                            <input id="password" class="input" type="password" placeholder="Input new password"
-                                                name="newPassword" />
-                                        </div>
-                                    </div>
+                    <% if(successPassword_msg !='' ){ %>
+                        <div id="successMessage" class="notification is-success">
+                            <%= successPassword_msg %>
 
-                                    <div class="field">
-                                        <label class="label">Confirm New Password</label>
-                                        <div class="control">
-                                            <input id="confirmPassword" class="input" type="password" placeholder="Confirm new password"
-                                                name="confirmNewPassword" />
-                                        </div>
-                                    </div>
-
-                                    <div class="field">
-                                        <div class="control">
-                                            <button class="button is-link" type="submit">Change</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
-                    </div>
+                        <% } %>
+
+                            <% if(errorPassword_msg !='' ){ %>
+                                <div id="successMessage" class="notification is-warning">
+                                    <%= errorPassword_msg %>
+
+                                </div>
+                                <% } %>
+
+                                    <% if(errorPassword.length> 0){ %>
+                                        <% errorPassword.forEach( (error)=> { %>
+                                            <div id="successMessage" class="notification is-warning">
+                                                <%= error.msg %>
+                                            </div>
+                                            <% }) %>
+
+                                                <% } %>
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <p class="card-header-title">Change Password</p>
+                                                        </div>
+                                                        <div class="card-content">
+                                                            <div class="content">
+                                                                <form action="/profile/change-password" method="POST">
+                                                                    <div class="field">
+                                                                        <label class="label">Old Password</label>
+                                                                        <div class="control">
+                                                                            <input class="input" type="password"
+                                                                                placeholder="Input old password"
+                                                                                name="oldPassword" required />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="field">
+                                                                        <label class="label">New Password</label>
+                                                                        <div class="control">
+                                                                            <input id="password" class="input"
+                                                                                type="password"
+                                                                                placeholder="Input new password"
+                                                                                name="newPassword" required />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="field">
+                                                                        <label class="label">Confirm New
+                                                                            Password</label>
+                                                                        <div class="control">
+                                                                            <input id="confirmPassword" class="input"
+                                                                                type="password"
+                                                                                placeholder="Confirm new password"
+                                                                                name="confirmNewPassword" required />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="field">
+                                                                        <div class="control">
+                                                                            <button class="button is-link"
+                                                                                type="submit">Change</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                 </div>
             </div>
         </section>
     </body>
     <%- include('partials/footer') %>
+        <script>
+            function checkChanges() {
+                var nameInput = document.getElementById('name');
+                var usernameInput = document.getElementById('username');
+                var YOBInput = document.getElementById('YOB');
+                var submitButton = document.getElementById('submitButton');
+
+
+                if (nameInput.value !== '<%= user.name %>' || usernameInput.value !== '<%= user.username %>' || YOBInput.value !== '<%= user.YOB %>') {
+                    submitButton.disabled = false; 
+                } else {
+                    submitButton.disabled = true; 
+                }
+            }
+            setTimeout(function () {
+                var successMessage = document.getElementById('successMessage');
+                if (successMessage) {
+                    successMessage.style.display = 'none';
+                }
+            }, 3000);
+        </script>
 
 </html>

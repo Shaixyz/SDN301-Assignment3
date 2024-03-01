@@ -16,6 +16,9 @@ orchidRouter
 orchidRouter
 .route('/:id')
 .get(orchidController.getOrchidById)
+orchidRouter
+.route('/:id/comment')
+.post(orchidController.addComment)
 
 orchidRouter
 .route('/edit/:id')
