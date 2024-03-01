@@ -4,67 +4,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <style>
     #successMessage {
       position: fixed;
       text-align: center;
-      top: 80px; 
-      left: 10px; 
-      z-index: 1000; 
+      top: 80px;
+      left: 10px;
+      z-index: 1000;
+    }
+
+    .search-form {
+      padding-top: 20px;
+      padding-left: 135px;
+      width: 40%;
+      padding-right: 72px;
+    }
+
+    .search-form .field {
+      margin-bottom: 0;
+    }
+
+    .search-form .control {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .search-form .input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .search-form .button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   </style>
 </head>
 
 <body>
   <%- include('partials/header') %>
-  <% if(success_msg != ''){ %>
-    <div id="successMessage" class="notification is-success" style="width: 200px; padding: 10px">
-      <%= success_msg %>
-    </div>
-  <% } %>
-
-  <% if(error_msg !='' ){ %>
-    <div id="successMessage" class="notification is-warning" style="width: 200px; padding: 10px">
-        <%= error_msg %>
-
-    </div>
-    <% } %>
-
-  <div class="container" style="padding: 3rem; min-height: 100vh;"> 
-    <div class="columns is-multiline">
-      <% orchids.forEach(function(orchid, index){ %>
-      <div class="column is-one-third">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="<%= orchid.image %>" alt="<%= orchid.name %>">
-            </figure>
-          </div>
-          <div class="card-content"
-            style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-4">
-                  <%= orchid.name %>
-                </p>
-              </div>
-            </div>
-
-            <div class="buttons">
-              <a class="button is-primary" href="/orchids/<%=orchid._id%>">View</a>
-            </div>
-          </div>
+    <form method="GET" class="search-form">
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input class="input" type="text" name="search" placeholder="Search for orchids">
+        </div>
+        <div class="control">
+          <button class="button is-primary" type="submit">Search</button>
         </div>
       </div>
-      <% }); %>
-    </div>
-  </div>
-  <%- include('partials/footer') %>
+    </form>
+
+    <% if(success_msg !='' ){ %>
+      <div id="successMessage" class="notification is-success" style="width: 200px; padding: 10px">
+        <%= success_msg %>
+      </div>
+      <% } %>
+
+        <% if(error_msg !='' ){ %>
+          <div id="successMessage" class="notification is-warning" style="width: 200px; padding: 10px">
+            <%= error_msg %>
+
+          </div>
+          <% } %>
+
+            <div class="container" style="padding: 3rem; min-height: 100vh;">
+              <div class="columns is-multiline">
+                <% orchids.forEach(function(orchid, index){ %>
+                  <div class="column is-one-third">
+                    <div class="card">
+                      <div class="card-image">
+                        <figure class="image is-4by3">
+                          <img src="<%= orchid.image %>" alt="<%= orchid.name %>">
+                        </figure>
+                      </div>
+                      <div class="card-content"
+                        style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+                        <div class="media">
+                          <div class="media-content">
+                            <p class="title is-4">
+                              <%= orchid.name %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="buttons">
+                          <a class="button is-primary" href="/orchids/<%=orchid._id%>">View</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }); %>
+              </div>
+            </div>
+            <%- include('partials/footer') %>
 </body>
 
 <script>
-  setTimeout(function() {
+  setTimeout(function () {
     var successMessage = document.getElementById('successMessage');
     if (successMessage) {
       successMessage.style.display = 'none';

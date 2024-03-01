@@ -169,7 +169,6 @@ class orchidController {
             });
         }).catch(next);
     }
-
 }
 
 module.exports = new orchidController();

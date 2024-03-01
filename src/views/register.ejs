@@ -15,20 +15,20 @@
                             style="width: 25rem; height: auto;">
                             <div>
                                 <% if(success_msg !='' ){ %>
-                                    <div class="notification is-success">
+                                    <div id="successMessage" class="notification is-success">
                                         <%= success_msg %>
 
                                     </div>
                                     <% } %>
                                         <% if(error_msg !='' ){ %>
-                                            <div class="notification is-warning">
+                                            <div id="successMessage" class="notification is-warning">
                                                 <%= error_msg %>
 
                                             </div>
                                             <% } %>
 
                                                 <% if(error !='' ){ %>
-                                                    <div class="notification is-warning">
+                                                    <div id="successMessage" class="notification is-warning">
                                                         <%= error %>
 
                                                     </div>
@@ -117,5 +117,12 @@
     </body>
 
     <%- include('partials/footer') %>
-
+    <script>
+        setTimeout(function() {
+          var successMessage = document.getElementById('successMessage');
+          if (successMessage) {
+            successMessage.style.display = 'none';
+          }
+        }, 3000); 
+      </script>
 </html>
